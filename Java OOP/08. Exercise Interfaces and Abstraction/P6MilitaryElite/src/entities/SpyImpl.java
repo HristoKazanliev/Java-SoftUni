@@ -17,7 +17,7 @@ public class SpyImpl extends SoldierImpl implements Spy {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Name: %s %s Id: %d}", this.getFirstName(), this.getLastName(), this.getId())).append(System.lineSeparator());
+        sb.append(String.format("Name: %s %s Id: %d", this.getFirstName(), this.getLastName(), this.getId())).append(System.lineSeparator());
         sb.append(String.format("Code Number: %s", this.codeNumber));
         return sb.toString().trim();
     }
