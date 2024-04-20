@@ -6,6 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 public class CommandImpl implements CommandInterface {
+    class ToUpperTransform implements TextTransform {
+        @Override
+        public void invokeOn(StringBuilder text, int startIndex, int endIndex){
+            for (int i = startIndex; i < endIndex; i++) {
+                text.setCharAt(i, Character.toUpperCase(text.charAt(i)));
+            }
+        }
+    }
     private Map<String, TextTransform> commandTransforms;
     private StringBuilder text;
 
@@ -35,11 +43,7 @@ public class CommandImpl implements CommandInterface {
 
     protected List<Command> initCommands() {
         List<Command> commands = new ArrayList<>();
-        CutTransform cutTransform = new CutTransform();
-
         commands.add(new Command("uppercase", new ToUpperTransform()));
-        commands.add(new Command("cut", cutTransform));
-        commands.add(new Command("paste", new PasteTransform(cutTransform)));
 
         return commands;
     }
