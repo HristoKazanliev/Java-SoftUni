@@ -29,3 +29,5 @@ replay_pid*
 .idea/
 *.iml
 /Java OOP/11. SOLID
+/Java OOP/16. Unit Testing/testing/target
+/Java OOP/17. Exercise Unit Testing/UnitTesting_Exercises/target
