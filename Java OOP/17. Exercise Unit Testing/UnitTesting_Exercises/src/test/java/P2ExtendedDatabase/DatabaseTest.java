@@ -1,5 +1,6 @@
 package P2ExtendedDatabase;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,10 @@ public class DatabaseTest {
     @Before
     public void setUp() throws OperationNotSupportedException {
         database = new Database(PEOPLE);
+    }
+    @After
+    public void tearDown() {
+        Mockito.reset(PERSON1, PERSON2, PERSON3);
     }
     @Test()
     public void constructorShouldWorkCorrectly() throws OperationNotSupportedException {
