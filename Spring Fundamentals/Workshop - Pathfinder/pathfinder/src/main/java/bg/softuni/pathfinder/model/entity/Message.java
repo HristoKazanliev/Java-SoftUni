@@ -1,21 +1,18 @@
-package bg.softuni.pathfinder.model;
+package bg.softuni.pathfinder.model.entity;
 
 import jakarta.persistence.*;
 
 import java.time.Instant;
 
 @Entity
-@Table(name = "comments")
-public class Comment {
+@Table(name = "messages")
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private boolean approved;
-
-    @Column(nullable = false)
-    private Instant created;
+    @Column(nullable = false, name = "date_time")
+    private Instant dateTime;
 
     @Column(name = "text_content", columnDefinition = "TEXT",nullable = false)
     private String textContent;
@@ -23,10 +20,10 @@ public class Comment {
     @ManyToOne(optional = false)
     private User author;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Route route;
+    @ManyToOne(optional = false)
+    private User recipient;
 
-    public Comment() {
+    public Message() {
     }
 
     public long getId() {
@@ -37,20 +34,12 @@ public class Comment {
         this.id = id;
     }
 
-    public boolean isApproved() {
-        return approved;
+    public Instant getDateTime() {
+        return dateTime;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
-
-    public Instant getCreated() {
-        return created;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
+    public void setDateTime(Instant dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getTextContent() {
@@ -69,11 +58,11 @@ public class Comment {
         this.author = author;
     }
 
-    public Route getRoute() {
-        return route;
+    public User getRecipient() {
+        return recipient;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setRecipient(User recipient) {
+        this.recipient = recipient;
     }
 }
