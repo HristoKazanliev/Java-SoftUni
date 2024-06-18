@@ -1,6 +1,6 @@
 package bg.softuni.mobilelele.web;
 
-import bg.softuni.mobilelele.model.UserRegistrationDTO;
+import bg.softuni.mobilelele.model.dto.UserRegistrationDTO;
 import bg.softuni.mobilelele.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

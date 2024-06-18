@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -68,7 +68,9 @@
 
 <div class="container">
     <h2 class="text-center text-white">Upload Offer</h2>
-    <form method="POST" 
+    <form th:method="POST"
+          th:action="@{/offers/add}"
+          th:object="${addOfferDTO}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
 
@@ -95,10 +97,12 @@
         </div>
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
-                <select id="engine" class="form-control">
+                <label class="text-center text-white font-weight-bold" th:for="engineType">Engine</label>
+                <select th:field="*{engineType}" class="form-control">
                     <option value="">- Select engine type -</option>
-                    <option>
+                    <option th:each="type: ${allEngineTypes}"
+                            th:value="${type}"
+                            th:text="${type}">
                         Engine type
                     </option>
                 </select>
@@ -128,8 +132,8 @@
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
-                <label for="mileage" class="text-white font-weight-bold">Mileage</label>
-                <input id="mileage" type="number" min="0" max="900000" step="1000"
+                <label th:for="mileage" class="text-white font-weight-bold">Mileage</label>
+                <input th:field="*{mileage}" type="number" min="0" max="900000" step="1000"
                        class="form-control"
                        placeholder="Mileage in kilometers"/>
                 <p class="errors alert alert-danger">
@@ -139,8 +143,8 @@
         </div>
 
         <div class="form-group">
-            <label class="text-white font-weight-bold" for="description">Description</label>
-            <textarea id="description" type="textarea" class="form-control" rows="3"
+            <label class="text-white font-weight-bold" th:for="description">Description</label>
+            <textarea th:field="*{description}" type="textarea" class="form-control" rows="3"
                       placeholder="Description"></textarea>
             <p class="errors alert alert-danger">
                 Description is required.

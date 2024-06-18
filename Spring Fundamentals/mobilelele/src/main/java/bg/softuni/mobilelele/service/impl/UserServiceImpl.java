@@ -1,6 +1,6 @@
 package bg.softuni.mobilelele.service.impl;
 
-import bg.softuni.mobilelele.model.UserRegistrationDTO;
+import bg.softuni.mobilelele.model.dto.UserRegistrationDTO;
 import bg.softuni.mobilelele.service.UserService;
 import org.springframework.stereotype.Service;
 
