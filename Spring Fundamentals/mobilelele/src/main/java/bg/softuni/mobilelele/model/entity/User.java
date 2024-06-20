@@ -1,27 +1,21 @@
-package bg.softuni.mobilelele.model.dto;
+package bg.softuni.mobilelele.model.entity;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 
-public class UserRegistrationDTO {
-    @NotEmpty
-    @Email
+@Entity
+@Table(name = "users")
+public class User extends BaseEntity{
+    @Column(unique = true)
     private String email;
-    @NotEmpty
     private String password;
-    @NotEmpty
-    @Size(min = 5, max = 20)
     private String firstName;
-    @NotEmpty
-    @Size(min = 5, max = 20)
     private String lastName;
 
     public String getEmail() {
         return email;
     }
 
-    public UserRegistrationDTO setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -30,7 +24,7 @@ public class UserRegistrationDTO {
         return password;
     }
 
-    public UserRegistrationDTO setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -39,7 +33,7 @@ public class UserRegistrationDTO {
         return firstName;
     }
 
-    public UserRegistrationDTO setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -48,14 +42,14 @@ public class UserRegistrationDTO {
         return lastName;
     }
 
-    public UserRegistrationDTO setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
     @Override
     public String toString() {
-        return "UserRegistrationDTO{" +
+        return "User{" +
                 "email='" + email + '\'' +
                 ", password='" + (password != null ? "N/A" : "[Provided]") + '\'' +
                 ", firstName='" + firstName + '\'' +
