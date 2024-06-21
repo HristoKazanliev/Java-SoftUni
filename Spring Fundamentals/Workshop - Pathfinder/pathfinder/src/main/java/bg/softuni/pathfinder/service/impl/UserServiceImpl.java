@@ -2,6 +2,7 @@ package bg.softuni.pathfinder.service.impl;
 
 import bg.softuni.pathfinder.data.UserRepository;
 import bg.softuni.pathfinder.model.dto.UserLoginDTO;
+import bg.softuni.pathfinder.model.dto.UserProfileDto;
 import bg.softuni.pathfinder.model.dto.UserRegisterDTO;
 import bg.softuni.pathfinder.model.entity.User;
 import bg.softuni.pathfinder.model.enums.Level;
@@ -44,8 +45,18 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Username not found");
         }
 
-        if (this.passwordEncoder.matches(loginData.getPassword(), user.getPassword()) && !currentUser.isLoggedIn()) {
-            currentUser.setUser(user);
+        if (this.passwordEncoder.matches(loginData.getPassword(), user.getPassword()) && !this.currentUser.isLoggedIn()) {
+            this.currentUser.setUser(user);
         }
+    }
+
+    @Override
+    public void logout() {
+        this.currentUser.setUser(null);
+    }
+
+    @Override
+    public UserProfileDto getProfileDetails() {
+        return this.modelMapper.map(this.currentUser.getUser(), UserProfileDto.class);
     }
 }

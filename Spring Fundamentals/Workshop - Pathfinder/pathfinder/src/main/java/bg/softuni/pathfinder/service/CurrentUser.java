@@ -13,6 +13,13 @@ public class CurrentUser {
     public boolean isLoggedIn() {
         return this.user != null;
     }
+
+    public boolean isAdmin() {
+        return this.user.getRoles()
+                .stream()
+                .anyMatch(r -> r.getName().equals("ADMIN"));
+    }
+
     public User getUser() {
         return user;
     }
