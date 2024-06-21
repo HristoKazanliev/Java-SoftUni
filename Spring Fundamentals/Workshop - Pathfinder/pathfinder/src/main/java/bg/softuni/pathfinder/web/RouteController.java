@@ -1,7 +1,7 @@
 package bg.softuni.pathfinder.web;
 
 import bg.softuni.pathfinder.model.dto.RouteAllDTO;
-import bg.softuni.pathfinder.service.RouteService;
+import bg.softuni.pathfinder.service.impl.RouteServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +10,10 @@ import java.util.List;
 
 @Controller
 public class RouteController {
-    private final RouteService routeService;
+    private final RouteServiceImpl routeService;
 
-    public RouteController(RouteService routeService) {
-        this.routeService = routeService;
+    public RouteController(RouteServiceImpl routeServiceImpl) {
+        this.routeService = routeServiceImpl;
     }
 
     @GetMapping("/routes")
