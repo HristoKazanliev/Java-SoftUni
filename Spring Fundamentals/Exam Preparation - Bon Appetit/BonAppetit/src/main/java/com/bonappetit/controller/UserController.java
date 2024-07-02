@@ -69,6 +69,13 @@ public class UserController {
             return "redirect:/login";
         }
 
+        boolean success = userService.login(userLoginDTO);
+        if (!success) {
+            redirectAttributes.addFlashAttribute("loginError", true);
+
+            return "redirect:/login";
+        }
+
         return "redirect:/home";
     }
 }
