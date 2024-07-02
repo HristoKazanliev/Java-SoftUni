@@ -10,7 +10,9 @@ import com.bonappetit.repo.CategoryRepository;
 import com.bonappetit.repo.RecipeRepository;
 import com.bonappetit.repo.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -56,6 +58,32 @@ public class RecipeService {
     }
 
     public Map<CategoryEnum, List<Recipe>> getAllByCategory() {
-        
+        Map<CategoryEnum, List<Recipe>> result = new HashMap<>();
+        List<Category> categories = categoryRepository.findAll();
+
+        for (Category category : categories) {
+            List<Recipe> recipes = recipeRepository.findByCategory(category);
+
+            result.put(category.getName(), recipes);
+        }
+
+        return result;
+    }
+
+    @Transactional
+    public void addToFavourites(Long userId, Long recipeId) {
+        Optional<User> userById = userRepository.findById(userId);
+        if (userById.isEmpty()) {
+            return;
+        }
+
+        Optional<Recipe> recipeById = recipeRepository.findById(recipeId);
+        if (recipeById.isEmpty()) {
+            return;
+        }
+
+        userById.get().addFavourite(recipeById.get());
+
+        userRepository.save(userById.get());
     }
 }

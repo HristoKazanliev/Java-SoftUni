@@ -1,5 +1,6 @@
 package com.bonappetit.controller;
 
+import com.bonappetit.config.UserSession;
 import com.bonappetit.model.dto.UserLoginDTO;
 import com.bonappetit.model.dto.UserRegisterDTO;
 import com.bonappetit.service.UserService;
@@ -14,9 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final UserSession userSession;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserSession userSession) {
         this.userService = userService;
+        this.userSession = userSession;
     }
 
     @ModelAttribute("registerData")
@@ -31,6 +34,10 @@ public class UserController {
 
     @GetMapping("/register")
     public String register() {
+        if (userSession.isLoggedIn()) {
+            return "redirect:/home";
+        }
+
         return "register";
     }
 
@@ -38,6 +45,10 @@ public class UserController {
     public String register(@Valid UserRegisterDTO userRegisterDTO,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes) {
+        if (userSession.isLoggedIn()) {
+            return "redirect:/home";
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerData", userRegisterDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerData", bindingResult);
@@ -55,6 +66,10 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
+        if (userSession.isLoggedIn()) {
+            return "redirect:/home";
+        }
+
         return "login";
     }
 
@@ -77,5 +92,16 @@ public class UserController {
         }
 
         return "redirect:/home";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        if (!userSession.isLoggedIn()) {
+            return "redirect:/";
+        }
+
+        userSession.logout();
+
+        return "redirect:/";
     }
 }
