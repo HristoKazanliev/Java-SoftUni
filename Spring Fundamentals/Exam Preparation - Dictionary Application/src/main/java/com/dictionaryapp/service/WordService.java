@@ -5,11 +5,15 @@ import com.dictionaryapp.model.dto.AddWordDTO;
 import com.dictionaryapp.model.entity.Language;
 import com.dictionaryapp.model.entity.User;
 import com.dictionaryapp.model.entity.Word;
+import com.dictionaryapp.model.enums.LanguageEnum;
 import com.dictionaryapp.repo.LanguageRepository;
 import com.dictionaryapp.repo.UserRepository;
 import com.dictionaryapp.repo.WordRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,5 +56,18 @@ public class WordService {
         wordRepository.save(word);
 
         return true;
+    }
+
+    public Map<LanguageEnum, List<Word>> getAllWords() {
+        Map<LanguageEnum, List<Word>> result = new HashMap<>();
+        List<Language> languages = languageRepository.findAll();
+
+        for (Language language : languages) {
+            List<Word> words = wordRepository.findByLanguage(language);
+
+            result.put(language.getName(), words);
+        }
+
+        return result;
     }
 }
