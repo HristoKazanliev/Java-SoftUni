@@ -69,7 +69,7 @@ public class UserController {
         boolean success = userService.login(loginDTO);
         if (!success) {
             redirectAttributes.addFlashAttribute("loginData", loginDTO);
-            redirectAttributes.addFlashAttribute("userPassMismatch", true);
+            redirectAttributes.addFlashAttribute("loginError", true);
 
             return "redirect:/login";
         }

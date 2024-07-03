@@ -1,8 +1,10 @@
 package com.dictionaryapp.model.entity;
 
+import com.dictionaryapp.model.enums.LanguageEnum;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Dictionary;
 
 @Entity
 @Table(name = "words")
@@ -23,6 +25,7 @@ public class Word {
     private LocalDate inputDate;
 
    @ManyToOne(optional = false)
+//   @JoinColumn(name = "language_id", nullable = false)
     private Language language;
 
     @ManyToOne(optional = false)

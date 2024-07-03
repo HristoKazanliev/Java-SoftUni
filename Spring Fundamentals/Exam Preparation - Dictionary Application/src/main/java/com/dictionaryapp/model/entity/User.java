@@ -2,7 +2,9 @@ package com.dictionaryapp.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,10 +24,10 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "addedBy")
-    private Set<Word> addedWords;
+    private List<Word> addedWords;
 
     public User() {
-        this.addedWords = new HashSet<>();
+        this.addedWords = new ArrayList<>();
     }
 
     public long getId() {
@@ -60,11 +62,11 @@ public class User {
         this.email = email;
     }
 
-    public Set<Word> getAddedWords() {
+    public List<Word> getAddedWords() {
         return addedWords;
     }
 
-    public void setAddedWords(Set<Word> addedWords) {
+    public void setAddedWords(List<Word> addedWords) {
         this.addedWords = addedWords;
     }
 }

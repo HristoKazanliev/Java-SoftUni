@@ -3,7 +3,9 @@ package com.dictionaryapp.model.entity;
 import com.dictionaryapp.model.enums.LanguageEnum;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,23 +16,23 @@ public class Language {
     private long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private LanguageEnum languageName;
+    @Column(nullable = false, unique = true)
+    private LanguageEnum name;
 
     @Column(nullable = false)
     private String description;
 
     @OneToMany(mappedBy = "language")
-    private Set<Word> words;
+    private List<Word> words;
 
     public Language() {
-        this.words = new HashSet<>();
+        this.words = new ArrayList<>();
     }
 
     public Language(LanguageEnum languageName, String description) {
         super();
 
-        this.languageName = languageName;
+        this.name = languageName;
         this.description = description;
     }
 
@@ -42,12 +44,12 @@ public class Language {
         this.id = id;
     }
 
-    public LanguageEnum getLanguageName() {
-        return languageName;
+    public LanguageEnum getName() {
+        return name;
     }
 
-    public void setLanguageName(LanguageEnum languageName) {
-        this.languageName = languageName;
+    public void setName(LanguageEnum name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -58,11 +60,11 @@ public class Language {
         this.description = description;
     }
 
-    public Set<Word> getWords() {
+    public List<Word> getWords() {
         return words;
     }
 
-    public void setWords(Set<Word> words) {
+    public void setWords(List<Word> words) {
         this.words = words;
     }
 }

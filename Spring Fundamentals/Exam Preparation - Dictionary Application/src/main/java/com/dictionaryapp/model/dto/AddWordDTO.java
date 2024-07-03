@@ -1,6 +1,7 @@
 package com.dictionaryapp.model.dto;
 
 import com.dictionaryapp.model.enums.LanguageEnum;
+import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -24,7 +25,7 @@ public class AddWordDTO {
     @Size(min = 2, max = 200)
     private String example;
 
-    @NotBlank
+    @NotNull
     @PastOrPresent(message = "Enter valid date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate inputDate;
