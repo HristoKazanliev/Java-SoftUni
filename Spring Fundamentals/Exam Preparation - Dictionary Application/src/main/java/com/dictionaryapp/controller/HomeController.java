@@ -5,9 +5,12 @@ import com.dictionaryapp.model.dto.InfoWordDTO;
 import com.dictionaryapp.model.entity.Word;
 import com.dictionaryapp.model.enums.LanguageEnum;
 import com.dictionaryapp.service.WordService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,7 @@ public class HomeController {
         }
 
         Map<LanguageEnum, List<Word>> allWords = wordService.getAllWords();
+        int allWordsCount = wordService.getAllWordsCount();
 
         List<InfoWordDTO> germanWords = allWords
                 .get(LanguageEnum.GERMAN)
@@ -68,8 +72,17 @@ public class HomeController {
         model.addAttribute("spanishData", spanishWords);
         model.addAttribute("frenchData", frenchWords);
         model.addAttribute("italianData", italianWords);
+        model.addAttribute("allWordsSize", allWordsCount);
 
         return "home";
     }
 
+    @GetMapping("/fail/{id}")
+    public String fail(@PathVariable Long id) {
+        if (id % 2 == 0) {
+            throw new EntityNotFoundException();
+        }
+
+        return "redirect:/home";
+    }
 }

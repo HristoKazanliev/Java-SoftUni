@@ -1,6 +1,7 @@
 package com.dictionaryapp.repo;
 
 import com.dictionaryapp.model.entity.Language;
+import com.dictionaryapp.model.entity.User;
 import com.dictionaryapp.model.entity.Word;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,5 +13,6 @@ import java.util.Optional;
 public interface WordRepository extends JpaRepository<Word, Long> {
     List<Word> findByLanguage(Language language);
 
-    Optional<Word> findById(Long id);
+    Optional<Word> findByIdAndAddedBy(Long id, User user);
+
 }

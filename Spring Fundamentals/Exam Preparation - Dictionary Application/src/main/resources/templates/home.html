@@ -38,7 +38,7 @@
                         <span>Example: <span th:text="${spanishWord.example}"></span></span>
                         <br>
                         <span>Added by: <span th:text="${spanishWord.username}"></span> on <span th:text="${spanishWord.inputDate}"></span></span>
-                        <a class="ml-3 text-danger" href="/">Remove</a>
+                        <a class="ml-3 text-danger" th:href="@{/words/delete-word/{id}(id= ${spanishWord.id})}">Remove</a>
                     </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
                         <span>Example: <span th:text="${frenchWord.example}"></span></span>
                         <br>
                         <span>Added by: <span th:text="${frenchWord.username}"></span> on <span th:text="${frenchWord.inputDate}"></span></span>
-                        <a class="ml-3 text-danger" href="/">Remove</a>
+                        <a class="ml-3 text-danger" th:href="@{/words/delete-word/{id}(id= ${frenchWord.id})}">Remove</a>
                     </div>
             </div>
 
@@ -72,11 +72,11 @@
                         <span>Example: <span th:text="${italianWord.example}"></span></span>
                         <br>
                         <span>Added by: <span th:text="${italianWord.username}"></span> on <span th:text="${italianWord.inputDate}"></span></span>
-                        <a class="ml-3 text-danger" href="/">Remove</a>
+                        <a class="ml-3 text-danger" th:href="@{/words/delete-word/{id}(id= ${italianWord.id})}">Remove</a>
                     </div>
             </div>
         </div>
-        <a href="/home/remove-all" class="btn btn-danger">Remove all {allWordsCount} words</a>
+        <a th:href="@{/words/remove-all}" class="btn btn-danger">Remove all <span th:text="${allWordsSize}"></span> words</a>
     </div>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>

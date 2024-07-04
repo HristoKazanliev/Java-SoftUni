@@ -66,9 +66,19 @@ public class WordController {
             return "redirect:/";
         }
 
-
+        wordService.delete(id);
 
         return "redirect:/home";
     }
 
+    @GetMapping("/words/remove-all")
+    public String removeAll() {
+        if (!userSession.isUserLoggedIn()) {
+            return "redirect:/";
+        }
+
+        wordService.deleteAll();
+
+        return "redirect:/home";
+    }
 }

@@ -10,6 +10,7 @@ import com.dictionaryapp.repo.LanguageRepository;
 import com.dictionaryapp.repo.UserRepository;
 import com.dictionaryapp.repo.WordRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,5 +70,31 @@ public class WordService {
         }
 
         return result;
+    }
+
+    public int getAllWordsCount() {
+        return wordRepository.findAll().size();
+    }
+
+    public void delete(long id) {
+        Optional<User> owner = userRepository.findById(userSession.userId());
+        if (owner.isEmpty()) {
+            return;
+        }
+
+        Optional<Word> word = wordRepository.findById(id);
+        if (word.isEmpty()) {
+            return;
+        }
+
+        wordRepository.deleteById(word.get().getId());
+
+//        userRepository.findById(userSession.userId())
+//                .flatMap(user -> wordRepository.findByIdAndAddedBy(id, user))
+//                .ifPresent(wordRepository::delete);
+    }
+
+    public void deleteAll() {
+        this.wordRepository.deleteAll();
     }
 }
