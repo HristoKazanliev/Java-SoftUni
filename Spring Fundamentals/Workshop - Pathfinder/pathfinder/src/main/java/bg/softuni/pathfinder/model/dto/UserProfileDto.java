@@ -3,6 +3,14 @@ package bg.softuni.pathfinder.model.dto;
 import bg.softuni.pathfinder.model.enums.Level;
 
 public class UserProfileDto {
+    private String username;
+    private String fullName;
+    private Integer age;
+    private Level level;
+
+    public UserProfileDto() {
+    }
+
     public String getUsername() {
         return username;
     }
@@ -34,14 +42,4 @@ public class UserProfileDto {
     public void setLevel(Level level) {
         this.level = level;
     }
-
-    private String username;
-    private String fullName;
-    private Integer age;
-    private Level level;
-
-    public UserProfileDto() {
-    }
-
-
 }
