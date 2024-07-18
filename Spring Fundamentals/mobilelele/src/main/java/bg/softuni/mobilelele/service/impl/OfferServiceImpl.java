@@ -4,6 +4,7 @@ import bg.softuni.mobilelele.model.dto.AddOfferDTO;
 import bg.softuni.mobilelele.model.dto.OfferDetailsDTO;
 import bg.softuni.mobilelele.model.entity.Offer;
 import bg.softuni.mobilelele.repository.OfferRepository;
+import bg.softuni.mobilelele.service.ExRateService;
 import bg.softuni.mobilelele.service.OfferService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,11 @@ import java.util.List;
 @Service
 public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
+    private final ExRateService exRateService;
 
-    public OfferServiceImpl(OfferRepository offerRepository) {
+    public OfferServiceImpl(OfferRepository offerRepository, ExRateService exRateService) {
         this.offerRepository = offerRepository;
+        this.exRateService = exRateService;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class OfferServiceImpl implements OfferService {
     public OfferDetailsDTO getOfferDetails(Long id) {
         return this.offerRepository
                 .findById(id)
-                .map(OfferServiceImpl::toOfferDetails)
+                .map(this::toOfferDetails)
                 .orElseThrow();
     }
 
@@ -34,7 +37,7 @@ public class OfferServiceImpl implements OfferService {
     public List<OfferDetailsDTO> getAllOffers() {
         return offerRepository.findAll()
                 .stream()
-                .map(OfferServiceImpl::toOfferDetails)
+                .map(this::toOfferDetails)
                 .toList();
     }
 
@@ -47,10 +50,11 @@ public class OfferServiceImpl implements OfferService {
         return new Offer()
                 .setDescription(addOfferDTO.description())
                 .setMileage(addOfferDTO.mileage())
+                .setPrice(addOfferDTO.price())
                 .setEngine(addOfferDTO.engineType());
     }
 
-    private static OfferDetailsDTO toOfferDetails(Offer offer) {
-        return new OfferDetailsDTO(offer.getId(), offer.getDescription(), offer.getMileage(), offer.getEngine());
+    private OfferDetailsDTO toOfferDetails(Offer offer) {
+        return new OfferDetailsDTO(offer.getId(), offer.getDescription(), offer.getMileage(), offer.getPrice(), offer.getEngine(), exRateService.allSupportedCurrencies());
     }
 }

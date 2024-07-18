@@ -5,6 +5,7 @@ import bg.softuni.mobilelele.model.dto.ExRatesDTO;
 import bg.softuni.mobilelele.model.entity.ExRateEntity;
 import bg.softuni.mobilelele.repository.ExRateRepository;
 import bg.softuni.mobilelele.service.ExRateService;
+import bg.softuni.mobilelele.service.exception.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestClient;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -65,7 +67,14 @@ public class ExRateServiceImpl implements ExRateService {
 
     @Override
     public BigDecimal convert(String from, String to, BigDecimal amount) {
-        return null;
+        return findExRate(from, to)
+                .orElseThrow(() -> new ObjectNotFoundException("Conversion from " + from + " to " + to + " not possible!"))
+                .multiply(amount);
+    }
+
+    @Override
+    public List<String> allSupportedCurrencies() {
+        return exRateRepository.findAll().stream().map(ExRateEntity::getCurrency).toList();
     }
 
     private Optional<BigDecimal> findExRate(String from, String to) {

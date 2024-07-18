@@ -10,10 +10,11 @@ public record AddOfferDTO(
         @NotEmpty(message = "{add.offer.description.not.empty}")
         @Size(min = 5, max = 500) String description,
         @NotNull @PositiveOrZero Integer mileage,
+        @NotNull @PositiveOrZero Integer price,
         @NotNull EngineTypeEnum engineType
 ) {
 
     public static AddOfferDTO empty() {
-        return new AddOfferDTO(null, null, null);
+        return new AddOfferDTO(null, 0, 0, null);
     }
 }
