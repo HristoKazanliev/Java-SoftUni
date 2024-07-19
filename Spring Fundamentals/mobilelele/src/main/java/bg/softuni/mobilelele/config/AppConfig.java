@@ -20,10 +20,10 @@ public class AppConfig {
         return messageSource;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+//    }
 
     @Bean
     public ModelMapper modelMapper() {

@@ -23,12 +23,12 @@ public class UserController {
         return "auth-login";
     }
 
-    @PostMapping("/login")
-    public String login(UserLoginDTO userLoginDTO) {
-        userService.login(userLoginDTO);
-
-        return "redirect:/";
-    }
+//    @PostMapping("/login")
+//    public String login(UserLoginDTO userLoginDTO) {
+//        userService.login(userLoginDTO);
+//
+//        return "redirect:/";
+//    }
 
     @ModelAttribute("registerDTO")
     public UserRegistrationDTO registrationDTO() {
@@ -47,10 +47,10 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PostMapping("/logout")
-    public String logout() {
-        userService.logout();
-
-        return "redirect:/";
-    }
+//    @PostMapping("/logout")
+//    public String logout() {
+//        userService.logout();
+//
+//        return "redirect:/";
+//    }
 }

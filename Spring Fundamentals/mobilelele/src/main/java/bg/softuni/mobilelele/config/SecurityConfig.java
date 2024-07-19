@@ -1,9 +1,13 @@
 package bg.softuni.mobilelele.config;
 
+import bg.softuni.mobilelele.repository.UserRepository;
+import bg.softuni.mobilelele.service.impl.MobileleUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -30,7 +34,7 @@ public class SecurityConfig {
                                 .usernameParameter("email")
                                 .passwordParameter("password")
                                 // successful login
-                                .defaultSuccessUrl("/")
+                                .defaultSuccessUrl("/", true)
                                 // login fails
                                 .failureForwardUrl("/users/login-error")
                 )
@@ -44,5 +48,15 @@ public class SecurityConfig {
                                 .invalidateHttpSession(true)
                 )
                 .build();
+    }
+
+    @Bean
+    public MobileleUserDetailsService userDetailsService(UserRepository userRepository) {
+        return new MobileleUserDetailsService(userRepository);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
 }
