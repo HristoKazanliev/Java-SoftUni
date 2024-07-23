@@ -1,26 +1,15 @@
 package bg.softuni.pathfinder.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UserLoginDTO {
     @NotBlank
     private String username;
     @NotBlank
     private String password;
 
-    public @NotBlank String getUsername() {
-        return username;
-    }
-
-    public void setUsername(@NotBlank String username) {
-        this.username = username;
-    }
-
-    public @NotBlank String getPassword() {
-        return password;
-    }
-
-    public void setPassword(@NotBlank String password) {
-        this.password = password;
-    }
 }

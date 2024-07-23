@@ -5,6 +5,7 @@ import bg.softuni.pathfinder.model.dto.RouteAddDTO;
 import bg.softuni.pathfinder.model.dto.RouteAllDTO;
 import bg.softuni.pathfinder.model.entity.Picture;
 import bg.softuni.pathfinder.model.entity.Route;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +22,12 @@ import java.util.Optional;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class RouteServiceImpl {
     private final RouteRepository routeRepository;
-    private final Random random;
+    private final Random random = new Random();
     private final ModelMapper modelMapper;
 
-    public RouteServiceImpl(RouteRepository routeRepository) {
-        this.routeRepository = routeRepository;
-
-        this.random = new Random();
-        this.modelMapper = new ModelMapper();
-    }
 
     @Transactional
     public RouteAllDTO getRandomRoute() {

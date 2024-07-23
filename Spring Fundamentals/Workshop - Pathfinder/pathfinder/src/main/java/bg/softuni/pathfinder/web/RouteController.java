@@ -7,6 +7,7 @@ import bg.softuni.pathfinder.model.enums.CategoryType;
 import bg.softuni.pathfinder.model.enums.Level;
 import bg.softuni.pathfinder.service.impl.RouteServiceImpl;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,12 +22,9 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class RouteController {
     private final RouteServiceImpl routeService;
-
-    public RouteController(RouteServiceImpl routeServiceImpl) {
-        this.routeService = routeServiceImpl;
-    }
 
     @ModelAttribute("routeData")
     public RouteAddDTO routeData() {
