@@ -17,13 +17,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final UserHelperService userHelperService;
     //private final CurrentUser currentUser;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserHelperService userHelperService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         //this.currentUser = currentUser;
+        this.userHelperService = userHelperService;
     }
 
     @Override
@@ -58,7 +60,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserProfileDto getProfileDetails() {
-        return new UserProfileDto();
-        //return this.modelMapper.map(this.currentUser.getUser(), UserProfileDto.class);
+        return this.modelMapper.map(userHelperService.getCurrentUser(), UserProfileDto.class);
     }
 }

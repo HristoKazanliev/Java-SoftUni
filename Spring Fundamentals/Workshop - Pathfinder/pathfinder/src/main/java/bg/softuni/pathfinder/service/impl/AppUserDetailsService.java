@@ -2,12 +2,15 @@ package bg.softuni.pathfinder.service.impl;
 
 import bg.softuni.pathfinder.data.UserRepository;
 import bg.softuni.pathfinder.model.entity.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
@@ -21,15 +24,22 @@ public class AppUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
                 .findByUsername(username)
-                .map(AppUserDetailsService::mapToUserDetails)
+                .map(this::mapToUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found!"));
     }
 
-    private static UserDetails mapToUserDetails(User user) {
+    private UserDetails mapToUserDetails(User user) {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities(List.of())
+                .authorities(mapToGrantedAuthorities(user))
                 .build();
+    }
+
+    private List<GrantedAuthority> mapToGrantedAuthorities(User user) {
+        return user
+                .getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name()))
+                .collect(Collectors.toUnmodifiableList());
     }
 }
