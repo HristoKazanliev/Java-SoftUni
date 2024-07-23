@@ -53,22 +53,32 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("loginData", new UserLoginDTO());
+
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(UserLoginDTO loginData) {
-        this.userService.loginUser(loginData);
+    @GetMapping("/login-error")
+    public ModelAndView loginError() {
+        ModelAndView modelAndView = new ModelAndView("login");
+        modelAndView.addObject("showErrorMessage", true);
+        modelAndView.addObject("loginData", new UserLoginDTO());
 
-        return "redirect:/";
+        return modelAndView;
     }
 
-    @PostMapping("/logout")
-    public String logout() {
-        this.userService.logout();
-
-        return "redirect:/";
-    }
+//    @PostMapping("/login")
+//    public String login(UserLoginDTO loginData) {
+//        this.userService.loginUser(loginData);
+//
+//        return "redirect:/";
+//    }
+//
+//    @PostMapping("/logout")
+//    public String logout() {
+//        this.userService.logout();
+//
+//        return "redirect:/";
+//    }
 
     @GetMapping("/profile")
     public String profile(Model model) {

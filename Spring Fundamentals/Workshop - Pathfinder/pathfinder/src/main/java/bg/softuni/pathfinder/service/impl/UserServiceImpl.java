@@ -6,7 +6,7 @@ import bg.softuni.pathfinder.model.dto.UserProfileDto;
 import bg.softuni.pathfinder.model.dto.UserRegisterDTO;
 import bg.softuni.pathfinder.model.entity.User;
 import bg.softuni.pathfinder.model.enums.Level;
-import bg.softuni.pathfinder.service.CurrentUser;
+//import bg.softuni.pathfinder.service.CurrentUser;
 import bg.softuni.pathfinder.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,13 +17,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    private final CurrentUser currentUser;
+    //private final CurrentUser currentUser;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, CurrentUser currentUser) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
-        this.currentUser = currentUser;
+        //this.currentUser = currentUser;
     }
 
     @Override
@@ -35,28 +35,30 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
     }
 
-    @Override
-    public void loginUser(UserLoginDTO loginData) {
-        User user = this.userRepository
-                .findByUsername(loginData.getUsername())
-                .orElse(null);
+    //Before spring security
+//    @Override
+//    public void loginUser(UserLoginDTO loginData) {
+//        User user = this.userRepository
+//                .findByUsername(loginData.getUsername())
+//                .orElse(null);
+//
+//        if (user == null || loginData.getPassword() == null || user.getPassword() == null) {
+//            throw new RuntimeException("Username not found");
+//        }
+//
+//        if (this.passwordEncoder.matches(loginData.getPassword(), user.getPassword()) && !this.currentUser.isLoggedIn()) {
+//            this.currentUser.setUser(user);
+//        }
+//    }
 
-        if (user == null || loginData.getPassword() == null || user.getPassword() == null) {
-            throw new RuntimeException("Username not found");
-        }
-
-        if (this.passwordEncoder.matches(loginData.getPassword(), user.getPassword()) && !this.currentUser.isLoggedIn()) {
-            this.currentUser.setUser(user);
-        }
-    }
-
-    @Override
-    public void logout() {
-        this.currentUser.setUser(null);
-    }
+//    @Override
+//    public void logout() {
+//        this.currentUser.setUser(null);
+//    }
 
     @Override
     public UserProfileDto getProfileDetails() {
-        return this.modelMapper.map(this.currentUser.getUser(), UserProfileDto.class);
+        return new UserProfileDto();
+        //return this.modelMapper.map(this.currentUser.getUser(), UserProfileDto.class);
     }
 }
